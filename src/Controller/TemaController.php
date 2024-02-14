@@ -6,6 +6,8 @@ use App\Entity\Tema;
 use App\Form\TemaType;
 use App\Repository\TemaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use MongoDB\Driver\Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,11 +73,23 @@ class TemaController extends AbstractController
     #[Route('/{id}', name: 'app_tema_delete', methods: ['POST'])]
     public function delete(Request $request, Tema $tema, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$tema->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $tema->getId(), $request->request->get('_token'))) {
             $entityManager->remove($tema);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_tema_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function getTemasRepository(ManagerRegistry $managerRegistry)
+    {
+        $objectManager = $managerRegistry->getManagerForClass(Tema::class);
+        return $objectManager->getRepository(Tema::class);
+    }
+
+    public function getTemasByMateria(ManagerRegistry $managerRegistry, $materia)
+    {
+        $temaRepository = $this->getTemasRepository($managerRegistry);
+        return $temaRepository->findBy(["materia" => $materia], []);
     }
 }

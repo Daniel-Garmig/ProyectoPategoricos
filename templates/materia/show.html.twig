@@ -7,16 +7,18 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ materium.id }}</td>
-            </tr>
+
             <tr>
                 <th>Nombre</th>
                 <td>{{ materium.nombre }}</td>
             </tr>
         </tbody>
     </table>
+    <ol>
+        {%  for tema in temas %}
+            <li>{{ tema.nombre }}</li>
+        {% endfor %}
+    </ol>
 
     <a href="{{ path('app_materia_index') }}">back to list</a>
 

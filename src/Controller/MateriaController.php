@@ -6,10 +6,15 @@ use App\Entity\Materia;
 use App\Form\MateriaType;
 use App\Repository\MateriaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Mapping\Entity;
+//use Symfony\Bridge\Doctrine\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+
+
 
 #[Route('/materia')]
 class MateriaController extends AbstractController
@@ -43,10 +48,13 @@ class MateriaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_materia_show', methods: ['GET'])]
-    public function show(Materia $materium): Response
+    public function show(ManagerRegistry $managerRegistry, Materia $materium): Response
     {
+        $temaController = new TemaController();
+        $listaTemas = $temaController->getTemasByMateria($managerRegistry, $materium);
         return $this->render('materia/show.html.twig', [
             'materium' => $materium,
+            "temas" => $listaTemas
         ]);
     }
 
@@ -71,7 +79,7 @@ class MateriaController extends AbstractController
     #[Route('/{id}', name: 'app_materia_delete', methods: ['POST'])]
     public function delete(Request $request, Materia $materium, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$materium->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $materium->getId(), $request->request->get('_token'))) {
             $entityManager->remove($materium);
             $entityManager->flush();
         }
