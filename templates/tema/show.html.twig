@@ -17,6 +17,8 @@
             </tr>
         </tbody>
     </table>
+    {% include 'listas.html.twig' with {'temas':elemento,"tipo":tipo} %}
+
 
     <a href="{{ path('app_tema_index') }}">back to list</a>
 
