@@ -1,7 +1,22 @@
 {% extends "base.html.twig" %}
 
+{% block title %}
+
+{% endblock %}
+
 {% block body %}
 
-    hola
+    {{ form_start(form) }}
+
+    <p>Escriba la frase abajo, para insertar un hueco, escriba <strong>${}</strong> con la palabra necesaria:</p>
+
+    {{ form_row(form.frase) }}
+    {{ form_errors(form) }}
+
+    <button type="submit">Enviar</button>
+
+    {{ form_end(form) }}
+
+    {{ texto }}
 
 {% endblock %}
