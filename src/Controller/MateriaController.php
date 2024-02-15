@@ -54,7 +54,8 @@ class MateriaController extends AbstractController
         $listaTemas = $temaController->getTemasByMateria($managerRegistry, $materium);
         return $this->render('materia/show.html.twig', [
             'materium' => $materium,
-            "temas" => $listaTemas
+            "temas" => $listaTemas,
+            "tipo"=>"tema"
         ]);
     }
 

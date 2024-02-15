@@ -14,11 +14,7 @@
             </tr>
         </tbody>
     </table>
-    <ol>
-        {%  for tema in temas %}
-            <li>{{ tema.nombre }}</li>
-        {% endfor %}
-    </ol>
+    {% include 'listas.html.twig' with {'temas':temas,"tipo":tipo} %}
 
     <a href="{{ path('app_materia_index') }}">back to list</a>
 
