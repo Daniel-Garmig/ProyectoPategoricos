@@ -1,7 +1,7 @@
 {% block list %}
     <ol>
-    {%  for tema in temas %}
-        <li><a href="http://localhost:8000/{{ tipo }}/{{ tema.id }}">{{ tema.nombre }}</a> </li>
+    {%  for elemento in elementos %}
+        <li><a href="http://localhost:8000/{{ tipo }}/{{ elemento.id }}">{{ elemento.nombre }}</a> </li>
     {% endfor %}
     </ol>
 {% endblock %}

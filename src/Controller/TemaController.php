@@ -45,10 +45,20 @@ class TemaController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_tema_show', methods: ['GET'])]
-    public function show(Tema $tema): Response
+    public function show(ManagerRegistry $managerRegistry,Tema $tema): Response
     {
+        $pategoriaController=new PategoriaController();
+        $tempPategoria=$pategoriaController->getTemasPategoriasRepository($managerRegistry);
+        $arrayTemp=array();
+
+        foreach ($tempPategoria as $temp){
+            $arrayTemp[$temp["tema_id"]]=["tema_id"=>$temp["tema_id"],"pategoria_id"=>$temp["pategoria_id"],"json"=>$temp["json"]];
+        }
         return $this->render('tema/show.html.twig', [
-            'tema' => $tema,
+            "tema"=>$tema,
+            'elementos' => $pategoriaController->getPategoriaRepository($managerRegistry)->findAll(),
+            "tipo"=>"pategoria",
+            "arrayTemp"=>$arrayTemp
         ]);
     }
 
@@ -92,4 +102,5 @@ class TemaController extends AbstractController
         $temaRepository = $this->getTemasRepository($managerRegistry);
         return $temaRepository->findBy(["materia" => $materia], []);
     }
+
 }

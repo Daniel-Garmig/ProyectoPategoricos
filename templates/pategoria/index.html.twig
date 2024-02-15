@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>actions</th>
             </tr>
@@ -16,7 +15,6 @@
         <tbody>
         {% for pategorium in pategorias %}
             <tr>
-                <td>{{ pategorium.id }}</td>
                 <td>{{ pategorium.nombre }}</td>
                 <td>
                     <a href="{{ path('app_pategoria_show', {'id': pategorium.id}) }}">show</a>

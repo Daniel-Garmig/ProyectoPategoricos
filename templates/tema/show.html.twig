@@ -7,19 +7,22 @@
 
     <table class="table">
         <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ tema.id }}</td>
-            </tr>
+
             <tr>
                 <th>Nombre</th>
                 <td>{{ tema.nombre }}</td>
             </tr>
         </tbody>
     </table>
-    {% include 'listas.html.twig' with {'temas':elemento,"tipo":tipo} %}
-
-
+    {% include 'listas.html.twig' with {'elementos':elementos,"tipo":tipo} %}
+    adios
+<ul>
+    {%  for temp in arrayTemp  %}
+        <li>tema id: {{ temp.tema_id }}</li>
+        <li>pategoria id: {{ temp.pategoria_id }}</li>
+        <li>json: {{ temp.json }}</li>
+    {% endfor %}
+</ul>
     <a href="{{ path('app_tema_index') }}">back to list</a>
 
     <a href="{{ path('app_tema_edit', {'id': tema.id}) }}">edit</a>

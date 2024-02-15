@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
                 <th>Nombre</th>
                 <th>actions</th>
             </tr>
@@ -16,7 +15,6 @@
         <tbody>
         {% for materium in materias %}
             <tr>
-                <td>{{ materium.id }}</td>
                 <td>{{ materium.nombre }}</td>
                 <td>
                     <a href="{{ path('app_materia_show', {'id': materium.id}) }}">show</a>

@@ -8,7 +8,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
+
                 <th>Nombre</th>
                 <th>actions</th>
             </tr>
@@ -16,7 +16,7 @@
         <tbody>
         {% for tema in temas %}
             <tr>
-                <td>{{ tema.id }}</td>
+
                 <td>{{ tema.nombre }}</td>
                 <td>
                     <a href="{{ path('app_tema_show', {'id': tema.id}) }}">show</a>

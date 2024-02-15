@@ -3,9 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Pategoria;
+use App\Entity\TemaPategoria;
 use App\Form\PategoriaType;
 use App\Repository\PategoriaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
+use MongoDB\Driver\Manager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -71,11 +74,27 @@ class PategoriaController extends AbstractController
     #[Route('/{id}', name: 'app_pategoria_delete', methods: ['POST'])]
     public function delete(Request $request, Pategoria $pategorium, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$pategorium->getId(), $request->request->get('_token'))) {
+        if ($this->isCsrfTokenValid('delete' . $pategorium->getId(), $request->request->get('_token'))) {
             $entityManager->remove($pategorium);
             $entityManager->flush();
         }
 
         return $this->redirectToRoute('app_pategoria_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function getPategoriaRepository(ManagerRegistry $managerRegistry)
+    {
+        $objectManager = $managerRegistry->getManagerForClass(Pategoria::class);
+        return $objectManager->getRepository(Pategoria::class);
+    }
+
+    public function getPategoriasByTema(ManagerRegistry $managerRegistry, $tema)
+    {
+        $temasPategorias=new TemaPategoria();
+        echo $this->getTemasPategoriasRepository($managerRegistry);
+    }
+    public function getTemasPategoriasRepository(ManagerRegistry $managerRegistry){
+        $objectManager=$managerRegistry->getManagerForClass(TemaPategoria::class);
+        return $objectManager->getRepository(TemaPategoria::class);
     }
 }
