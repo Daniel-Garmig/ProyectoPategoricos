@@ -2,10 +2,14 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Bundle\SecurityBundle\Security;
 
 class UserController extends AbstractController
 {
@@ -22,6 +26,19 @@ class UserController extends AbstractController
             'last_username' => $lastUsername,
             'error' => $error,
         ]);
+    }
+
+    #[Route(path: '/grantAdmin', name: 'app_grantAdmin')]
+    public function grantAdmin(EntityManagerInterface $entityManager, Security $secur): Response
+    {
+        // last username entered by the user
+        $user = $secur->getUser();
+        $user->setRoles(['ROLE_ADMIN', 'ROLE_USER']);
+        var_dump($user);
+        
+        $entityManager->flush();
+        
+        return $this->redirectToRoute('app_materia_index');
     }
 
     #[Route(path: '/logout', name: 'app_logout')]
